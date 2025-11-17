@@ -321,8 +321,8 @@ Optional providers (planned/behind flags): Exa/Tavily can be integrated later; F
 1) Clone and install
 
 ```bash
-git clone https://github.com/ssdeanx/deep-research-mcp-server
-cd deep-research-mcp-server
+git clone https://github.com/shreyashkashyapanand01/college_minor_project_working_last_option
+cd college_minor_project_working_last_option
 npm i && npm run build
 ```
 
