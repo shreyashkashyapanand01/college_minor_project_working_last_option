@@ -1,0 +1,124 @@
+@snippet-category(name: "deep-research.ts - Core Logic Snippets") {
+
+  @snippet(name: "Call generateSerpQueries Function", description: "Snippet to call the generateSerpQueries function with a user query") {
+    @code(language: "typescript") {
+      ```typescript
+      import { generateSerpQueries } from './deep-research'; // Adjust path if needed
+
+      async function testGenerateQueries() {
+        const researchQuery = "Your research topic here"; // Replace with your query
+        const serpQueries = await generateSerpQueries({ query: researchQuery, numQueries: 3 });
+        console.log("Generated SERP Queries:", serpQueries);
+      }
+
+      testGenerateQueries().catch(console.error);
+      ```
+    }
+    @usage-notes {
+      "Replace 'Your research topic here' with your actual query.  Adjust 'numQueries' parameter as needed.  This snippet directly tests the 'generateSerpQueries' function in isolation."
+    }
+  }
+
+  @snippet(name: "Process SERP Result - Example Call", description: "Example snippet to call processSerpResult with a mock SerpAPI result") {
+    @code(language: "typescript") {
+      ```typescript
+      import { processSerpResult } from './deep-research'; // Adjust path if needed
+
+      async function testProcessSERP() {
+        const searchQuery = "Example Search Query";
+        const mockSerpResult = { // Mock SearchResponse object (adjust to real structure if needed)
+          data: [
+            {
+              url: "https://example.com/result1",
+              title: "Example Result 1 Title",
+              snippet: "Example snippet from SERP result 1...",
+              markdown: "## Example Result 1 Markdown Content\n\nThis is some example content in markdown format."
+            },
+            {
+              url: "https://example.com/result2",
+              title: "Example Result 2 Title",
+              snippet: "Example snippet from SERP result 2...",
+              markdown: "## Example Result 2 Markdown Content\n\nThis is another example content in markdown format."
+            }
+          ]
+        };
+
+        const processingResult = await processSerpResult({
+          query: searchQuery,
+          result: mockSerpResult as any // Type assertion - adjust mock to real SearchResponse type for type safety
+        });
+        console.log("Processing Result:", processingResult);
+      }
+
+      testProcessSERP().catch(console.error);
+      ```
+    }
+    @usage-notes {
+      "This snippet tests 'processSerpResult' with a mock 'SearchResponse' object.  **Important:** You may need to adjust the 'mockSerpResult' to accurately match the structure of a real 'SearchResponse' from Firecrawl for type safety.  Replace 'Example Search Query' as needed."
+    }
+  }
+
+  @snippet(name: "Write Final Report - Test Snippet", description: "Snippet to test the writeFinalReport function with example learnings and URLs") {
+    @code(language: "typescript") {
+      ```typescript
+      import { writeFinalReport } from './deep-research'; // Adjust path if needed
+
+      async function testWriteReport() {
+        const researchPrompt = "Example Research Prompt for Report";
+        const exampleLearnings = [
+          "Learning 1: Example learning point from research.",
+          "Learning 2: Another key finding related to the topic."
+        ];
+        const exampleUrls = [
+          "https://example.com/source1",
+          "https://example.com/source2"
+        ];
+
+        const reportMarkdown = await writeFinalReport({
+          prompt: researchPrompt,
+          learnings: exampleLearnings,
+          visitedUrls: exampleUrls
+        });
+        console.log("\n--- Generated Markdown Report ---\n", reportMarkdown);
+      }
+
+      testWriteReport().catch(console.error);
+      ```
+    }
+    @usage-notes {
+      "This snippet directly tests the 'writeFinalReport' function.  It uses example 'researchPrompt', 'exampleLearnings', and 'exampleUrls'.  Run this to quickly generate and view a sample Markdown report."
+    }
+  }
+
+  @snippet(name: "Deep Research - Minimal Call (CLI Start)", description: "Minimal snippet to call deepResearch from CLI-like context (adjust parameters)") {
+    @code(language: "typescript") {
+      ```typescript
+      import { deepResearch } from './deep-research'; // Adjust path if needed
+
+      async function runMinimalDeepResearch() {
+        const researchQuery = process.argv[2] || "default research query"; // Get query from command line arg or use default
+        const breadth = 2; // Example breadth
+        const depth = 1;   // Example depth
+
+        const researchResult = await deepResearch({
+          query: researchQuery,
+          breadth: breadth,
+          depth: depth,
+          onProgress: (progress) => {
+            console.log("Progress:", progress); // Basic progress logging
+          }
+        });
+
+        console.log("\n--- Research Result (Minimal) ---\n");
+        console.log("Learnings:", researchResult.learnings);
+        console.log("Visited URLs:", researchResult.visitedUrls);
+      }
+
+      runMinimalDeepResearch().catch(console.error);
+      ```
+    }
+    @usage-notes {
+      "This snippet shows a minimal way to call 'deepResearch', suitable for testing from a CLI context. It attempts to get the research query from command-line arguments (process.argv[2]) or uses a default query.  Adjust 'breadth' and 'depth' as needed.  Basic progress logging is included."
+    }
+  }
+}
